@@ -25,6 +25,7 @@
       :prevent-scroll-exclude="scroller"
       @show="$_onListShow"
       @hide="$_onListHide"
+      @before-show="$_onListBeforeShow"
       @before-hide="$_onListBeforeHide"
     >
       <div class="md-drop-menu-list">
@@ -44,7 +45,8 @@
   </div>
 </template>
 
-<script>import Popup from '../popup'
+<script>
+import Popup from '../popup'
 import RadioList from '../radio-list'
 import {traverse, compareObjects} from '../_util'
 
@@ -179,6 +181,10 @@ export default {
       /* istanbul ignore next  */
       this.$emit('hide')
     },
+    $_onListBeforeShow() {
+      /* istanbul ignore next  */
+      this.$emit('before-show')
+    },
     $_onListBeforeHide() {
       /* istanbul ignore next  */
       this.activeMenuBarIndex = -1
@@ -193,7 +199,8 @@ export default {
     },
   },
 }
-</script>
+
+</script>
 
 <style lang="stylus">
 .md-drop-menu
@@ -256,5 +263,5 @@ export default {
     font-weight font-weight-normal
     &.is-selected .md-cell-item-title
       color color-primary
-      
+
 </style>
