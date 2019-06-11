@@ -1,6 +1,7 @@
 <template>
   <div class="md-drop-menu">
     <div class="md-drop-menu-bar">
+      <slot name="left"></slot>
       <template v-for="(item, index) in data">
         <div
           class="bar-item"
@@ -17,6 +18,7 @@
           ></span>
         </div>
       </template>
+      <slot name="right"></slot>
     </div>
     <md-popup
       v-model="isPopupShow"
@@ -45,8 +47,7 @@
   </div>
 </template>
 
-<script>
-import Popup from '../popup'
+<script>import Popup from '../popup'
 import RadioList from '../radio-list'
 import {traverse, compareObjects} from '../_util'
 
@@ -199,8 +200,7 @@ export default {
     },
   },
 }
-
-</script>
+</script>
 
 <style lang="stylus">
 .md-drop-menu
