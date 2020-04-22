@@ -1,1 +1,0 @@
-.md-chart line{stroke:var(--chart-line-color);stroke-width:.5;stroke-linecap:square}.md-chart path{stroke:var(--chart-path-color);stroke-width:1;stroke-linecap:butt}.md-chart-axis-y text{fill:var(--chart-text-color);font-size:var(--chart-value-size);text-anchor:end}.md-chart-axis-x text{fill:var(--chart-text-color);font-size:var(--chart-label-size);text-anchor:middle}
