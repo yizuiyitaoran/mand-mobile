@@ -15,9 +15,11 @@ Vue.component(ScrollView.name, ScrollView)
 
 ### Instruction
 
-`ScrollViewRefresh` is a pull-down refresh component built into the component library for visual display only. It needs to be used in the slot <a href="javascript:jumpAnchor('refresh')">refresh</a>. The pull-down refresh component can also be customized.
+* `ScrollViewRefresh` is a pull-down refresh component built into the component library for visual display only. It needs to be used in the slot <a href="javascript:jumpAnchor('refresh')">refresh</a>. The pull-down refresh component can also be customized.
 
-`ScrollViewMore` load-more component built into the component library for visual display only. It needs to be used in slot <a href="javascript:jumpAnchor('more')">more</a>. The load-more component can also be customized.
+* `ScrollViewMore` load-more component built into the component library for visual display only. It needs to be used in slot <a href="javascript:jumpAnchor('more')">more</a>. The load-more component can also be customized.
+
+* **The component container needs to have a height, otherwise there will be problems that cannot be scrolled or rebounded.** For more frequently asked questions, please refer to <a href="javascript:jumpAnchor('Appendix')">Appendix</a>
 
 ### Code Examples
 <!-- DEMO -->
@@ -30,11 +32,16 @@ Vue.component(ScrollView.name, ScrollView)
 |scrolling-x | horizontal scrolling | Boolean | `true` | -|
 |scrolling-y | vertical scrolling | Boolean | `true` | -|
 |bouncing | - | Boolean | `true` | -|
-|auto-reflow| automatically reset scroller size when content changes | Boolean | `false` | manually call `reflowScroller` when set to `false` |
+|auto-reflow| automatically reset scroller size when content changes | Boolean | `false` | manually call `reflowScroller` when set to `false` and it is recommended to turn `auto-reflow` off when `ScrollView` is hidden, otherwise the last scroll position will not be saved|
 |manual-init | manual initialization | Boolean | `false` | generally used for asynchronous initialization scenarios, you need to manually call the `init` method to complete the initialization |
 |end-reached-threshold | threshold for emitting `endReached`. | Number | 0 | unit `px` |
 |immediate-check-end-reaching <sup class="version-after">2.1.0+</sup>| check if it reaches the bottom at initialization | Boolean | `false` | - |
 |touch-angle <sup class="version-after">2.1.0+</sup>| angle value range that triggers scrolling | Number | 45 | unit `deg` |
+|is-prevent <sup class="version-after">2.3.0+</sup>| prevent browser default scrolling | Boolean | `true` | if set to `false`, the browser defaults to scroll when scrolling is triggered over a non-scrollable angle range |
+
+#### ScrollView TouchAngle
+
+<img src="https://pt-starimg.didistatic.com/static/starimg/img/cSL4mjxTmW1560240984431.jpg" width="460"/>
 
 #### ScrollViewRefresh Props
 |Props | Description | Type | Default | Note |
@@ -97,6 +104,9 @@ Scroll to the specified location
 |top|distance from top|Number|
 |animate|using animation|Boolean|
 
+##### getOffsets(): {left: number, top: number}
+Get scrolling position <sup class="version-after">2.5.4+</sup>
+
 ##### triggerRefresh()
 -
 
@@ -122,5 +132,28 @@ Release refreshable event
 ##### @refreshing()
 Refreshing event
 
-##### @endReached()
+##### @end-reached()
 Reached end event
+
+### Appendix
+
+#### Can't scroll normally and rebounds abnormally
+
+First of all, most of the scrolling anomalies are caused by problems with container size (vertical scrolling: height, horizontal scrolling: width) and the height of the container can be controlled in a variety of ways, such as **fixed size**, **flow layout**, **flex layout**. When the container size is insufficient, it will cause the internal [Scroller to initialize](https://github.com/didi/mand-mobile/blob/master/components/scroll-view/index.vue#L374) abnormally. When such a situation occurs, you can check the height of **`.md-scroll-view`** by browser elements inspector.
+
+Secondly, confirm whether there is a dynamic change of the scroll area content, resulting in a change in the size of the scroll area. In this case, you need to call `reflowScroller` or set `auto-reflow` to `true` directly.
+
+#### Scrolling can't trigger endReached after pull-down refreshing
+
+Inside the component `pull-down refreshing` and `pull-up loading` should be treated as two unrelated actions, because the action content has user decision (business logic), so it cannot be determined that the pull-down refreshing must be "refresh the list back to the first page state", so you can't control `isEndReaching` directly after pull-down refreshing. The problem can be abstracted as reseting the state of `pull-up loading` after `pull-down refreshing` and you can manually reset it in the `refreshing` event:
+
+```javascript
+$_onRefresh() {
+  // Reset list data
+  this.list = 10
+  this.$refs.scrollView.finishRefresh()
+  // Reset pull-up loading state
+  this.isFinished = false
+  this.$refs.scrollView.finishLoadMore()
+}
+```

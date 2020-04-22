@@ -31,6 +31,9 @@ Vue.component(CheckList.name, CheckList)
 |icon|icon name of checked options|String|`checked`|-|
 |icon-inverse|icon name of unchecked options|String|`checke`|-|
 |icon-disabled|icon name of disabled options|String|`check-disabled`|-|
+|icon-svg<sup class="version-after">2.3.0+</sup>|use svg icon|Boolean|`false`|-|
+|size|size of icon|String|`md`|-|
+
 ---
 
 #### CheckBox Props
@@ -70,6 +73,13 @@ Check multiple checks. Combine with `Check` or `CheckBox`.
 |----|-----|------|------|
 |name|name will be toggle|String|-|
 
+##### toggleAll(checked?: Boolean)
+Select All or Deselect (`disabled` options will not be changed) <sup class="version-after">2.5.9+</sup>
+
+| Arg | Description | Type | Default |
+|----|-----|------|------|
+|checked|select all or none|Boolean|reverse election if empty|
+
 ---
 
 #### CheckList Props
@@ -77,6 +87,12 @@ Check multiple checks. Combine with `Check` or `CheckBox`.
 |----|-----|------|------|------|
 |v-model|selected names|Array|-|-|
 |options|data otpions|Array<{text, value, disabled, ...}>|`[]`|-|
+|icon<sup class="version-after">2.3.0+</sup>|icon of selected option|String|`checked`|-|
+|icon-inverse<sup class="version-after">2.3.0+</sup>|icon of unselected options|String|`check`|-|
+|icon-disabled<sup class="version-after">2.3.0+</sup>|icon of disabled options|String|`check-disabled`|-|
+|icon-size<sup class="version-after">2.3.0+</sup>|the size of icon|String|`md`|-|
+|icon-svg<sup class="version-after">2.3.0+</sup>|use svg icon|Boolean|`false`|-|
+|icon-position<sup class="version-after">2.3.0+</sup>|the position of icon|String|`right`|`left`, `right`|
 |is-slot-scope|if it is mandatory to use `slot-scope`|Boolean|-|it depends on exact cases to determine whether to use it or not, and avoids adding `if/else` to component|
 
 #### CheckList Slots
@@ -85,7 +101,7 @@ Check multiple checks. Combine with `Check` or `CheckBox`.
 ```html
 <template>
   <md-check-list :options="data">
-    <template slot-scope="{ option }">
+    <template slot-scope="{ option, index, selected }">
       <div class="custom-title" v-text="option.text"></div>
       <div class="custom-brief">{{ option.text }} custom description</div>
     </template>

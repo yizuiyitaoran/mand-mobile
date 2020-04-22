@@ -11,7 +11,6 @@
       isDisabled ? 'is-disabled': '',
       isAmount ? 'is-amount': '',
       clearable ? 'is-clear' : '',
-      inputEnv,
       align,
       size
     ]"
@@ -34,7 +33,7 @@
         :placeholder="inputPlaceholder"
         :disabled="isDisabled"
         :readonly="readonly"
-        :maxlength="isFormative ? '' : maxlength"
+        :maxlength="isInputFormative ? '' : maxlength"
         autocomplete="off"
         @focus="$_onFocus"
         @blur="$_onBlur"
@@ -49,6 +48,7 @@
         class="md-input-item-fake"
         :class="{
           'is-focus': isInputFocus,
+          'is-waiting': !isInputEditing,
           'disabled': isDisabled,
           'readonly': readonly
         }"
@@ -118,7 +118,7 @@
 import FieldItem from '../field-item'
 import NumberKeyboard from '../number-keyboard'
 import {getCursorsPosition, setCursorsPosition} from './cursor'
-import {noop, isIOS, isAndroid, randomId} from '../_util'
+import {noop, randomId, debounce} from '../_util'
 import {formatValueByGapRule, formatValueByGapStep, trimValue} from '../_util/formate-value'
 
 export default {
@@ -142,6 +142,10 @@ export default {
       // text, bankCard, password, phone, money, digit
       type: String,
       default: 'text',
+    },
+    previewType: {
+      type: String,
+      default: '',
     },
     name: {
       type: [String, Number],
@@ -219,10 +223,7 @@ export default {
     },
     isFormative: {
       type: Boolean,
-      default() {
-        const type = this.type
-        return type === 'bankCard' || type === 'phone' || type === 'money' || type === 'digit'
-      },
+      default: false,
     },
     isHighlight: {
       type: Boolean,
@@ -244,22 +245,17 @@ export default {
       inputBindValue: '',
       inputNumberKeyboard: '',
       isInputFocus: false,
+      isInputEditing: false,
+      isPreview: false,
     }
   },
 
   computed: {
-    inputEnv() {
-      /* istanbul ignore next */
-      if (isIOS) {
-        return 'is-ios'
-      } else if (isAndroid) {
-        return 'is-android'
-      } else {
-        return 'is-browser'
-      }
+    inputItemType() {
+      return (this.isPreview ? this.previewType : this.type) || 'text'
     },
     inputType() {
-      let inputType = this.type || 'text'
+      let inputType = this.inputItemType || 'text'
       if (inputType === 'bankCard' || inputType === 'phone' || inputType === 'digit') {
         inputType = 'tel'
       } else if (inputType === 'money') {
@@ -268,7 +264,7 @@ export default {
       return inputType
     },
     inputMaxLength() {
-      if (this.type === 'phone') {
+      if (this.inputItemType === 'phone') {
         return 11
       } else {
         return this.maxlength
@@ -283,6 +279,10 @@ export default {
     isInputEmpty() {
       return !this.inputValue.length
     },
+    isInputFormative() {
+      const type = this.inputItemType
+      return this.isFormative || (type === 'bankCard' || type === 'phone' || type === 'money' || type === 'digit')
+    },
     isDisabled() {
       return this.rootField.disabled || this.disabled
     },
@@ -295,11 +295,19 @@ export default {
         this.inputValue = this.$_formateValue(this.$_subValue(val + '')).value
       }
     },
+    previewType: {
+      handler(val) {
+        this.isPreview = !!val
+      },
+      immediate: true,
+    },
     inputValue(val) {
       this.inputBindValue = val
-      val = this.isFormative ? this.$_trimValue(val) : val
-      this.$emit('input', val)
-      this.$emit('change', this.name, val)
+      val = this.isInputFormative ? this.$_trimValue(val) : val
+      if (val !== this.value) {
+        this.$emit('input', val)
+        this.$emit('change', this.name, val)
+      }
     },
     isInputFocus(val) {
       if (!this.isVirtualKeyboard || !this.inputNumberKeyboard) {
@@ -333,7 +341,7 @@ export default {
   methods: {
     // MARK: private methods
     $_formateValue(curValue, curPos = 0) {
-      const type = this.type
+      const type = this.inputItemType
       const name = this.name
       const oldValue = this.inputValue
       const isAdd = oldValue.length > curValue.length ? -1 : 1
@@ -341,7 +349,7 @@ export default {
       let formateValue = {value: curValue, range: curPos}
 
       // no format
-      if (!this.isFormative || curValue === '') {
+      if (!this.isInputFormative || curValue === '') {
         return formateValue
       }
 
@@ -411,9 +419,21 @@ export default {
         return val
       }
     },
+    $_startEditInput() {
+      this.isInputEditing = true
+      this.$_stopEditInput()
+    },
+    $_stopEditInput: debounce(function() {
+      this.isInputEditing = false
+    }, 500),
     $_clearInput() {
       this.inputValue = ''
       !this.isTitleLatent && this.focus()
+      this.isPreview = false
+    },
+    $_stopPreview() {
+      this.$_clearInput()
+      this.$emit('update:previewType', '')
     },
     $_focusFakeInput() {
       this.isInputFocus = true
@@ -453,13 +473,13 @@ export default {
     $_onInput(event) {
       const formateValue = this.$_formateValue(
         event.target.value,
-        this.isFormative ? getCursorsPosition(event.target) : 0,
+        this.isInputFormative ? getCursorsPosition(event.target) : 0,
       )
 
       this.inputValue = formateValue.value
       this.inputBindValue = formateValue.value
 
-      if (this.isFormative) {
+      if (this.isInputFormative) {
         this.$nextTick(() => {
           setCursorsPosition(event.target, formateValue.range)
         })
@@ -473,6 +493,10 @@ export default {
     },
     $_onKeydown(event) {
       this.$emit('keydown', this.name, event)
+      if (!(+event.keyCode === 13 || +event.keyCode === 108)) {
+        this.$_startEditInput()
+        this.isPreview && this.$_stopPreview()
+      }
     },
     $_onFocus() {
       this.isInputFocus = true
@@ -496,7 +520,14 @@ export default {
       }
     },
     $_onNumberKeyBoardEnter(val) {
+      if (this.isPreview) {
+        this.$_stopPreview()
+      }
+      if (this.inputMaxLength > 0 && this.$_trimValue(this.inputValue).length >= this.inputMaxLength) {
+        return
+      }
       this.inputValue = this.$_formateValue(this.inputValue + val).value
+      this.$_startEditInput()
     },
     $_onNumberKeyBoardDelete() {
       const inputValue = this.inputValue
@@ -504,6 +535,10 @@ export default {
         return
       }
       this.inputValue = this.$_formateValue(inputValue.substring(0, inputValue.length - 1)).value
+      this.$_startEditInput()
+      if (this.isPreview) {
+        this.$_stopPreview()
+      }
     },
     $_onNumberKeyBoardConfirm() {
       this.$emit('confirm', this.name, this.inputValue)
@@ -588,11 +623,12 @@ export default {
     z-index 2
     display none
     content " "
-    height input-item-font-size
+    height input-item-font-size-large
     border-right solid 1.5px color-text-base
-    animation keyboard-cursor infinite 1s step-start
   &.is-focus:after
     display inline
+  &.is-waiting:after
+    animation keyboard-cursor infinite 1s step-start
 
 .md-input-item-fake-placeholder
   position absolute
@@ -673,7 +709,6 @@ export default {
   &.is-amount
     .md-input-item-input,
     .md-input-item-fake
-      padding-top 5px
       font-family font-family-number
     &.large
       .md-input-item-input,
@@ -704,6 +739,9 @@ export default {
   &.is-android
     .md-input-item-fake::after
       border-right solid 4px color-text-base
+    .md-input-item-input,
+    .md-input-item-fake
+      font-weight input-item-font-weight-android
 
 @-webkit-keyframes keyboard-cursor
   0%

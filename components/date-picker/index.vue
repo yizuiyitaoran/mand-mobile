@@ -11,8 +11,10 @@
       :describe="describe"
       :ok-text="okText"
       :cancel-text="cancelText"
+      :large-radius="largeRadius"
       :is-view="isView"
       :mask-closable="maskClosable"
+      :keep-index="keepIndex"
       @initialed="$emit('initialed')"
       @change="$_onPickerChange"
       @confirm="$_onPickerConfirm"
@@ -351,7 +353,7 @@ export default {
         Minute: this.currentMinutes
       }
       args.map(item => {
-        defaultArguments[item.type] = item.value
+        item && (defaultArguments[item.type] = item.value)
       })
       return defaultArguments
     },

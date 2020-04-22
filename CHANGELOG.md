@@ -3,6 +3,238 @@ title: 更新日志
 toc: hidden
 ---
 
+### 2.5.9
+
+`2020-03-26`
+
+- Feat
+  - `CheckGroup`增加方法`toggleAll`用于全选/全不选和反选[#648](https://github.com/didi/mand-mobile/issues/648)
+
+- Fix
+  - 修复`TextAreaItem`当异步内容填充时，组件高度不正确的问题
+
+### 2.5.8
+
+`2020-02-04`
+
+- Feat
+  - `Captcha`增加属性`auto-send`，用于控制验证码弹窗第一次展示时是否自动触发`send`事件
+  - `ResultPage`属性增加动态变更响应
+
+- Fix
+  - 修复`Picker`和`DatePicker`快速滑动多列时，选中项异常的问题[#632](https://github.com/didi/mand-mobile/issues/632)
+  - 修复`ScrollViewRefresh`中的`refreshActive`事件触发错误问题[#642](https://github.com/didi/mand-mobile/issues/642)
+  - 修复`Amount`使用千分符展示负数错误问题[#644](https://github.com/didi/mand-mobile/issues/644)
+  - 修复`TextAreaItem`在`Popup`中嵌套时尺寸计算错误的问题
+  - 修复`Swiper`上下滑动导致自动播放失效的问题
+  - 修复`Tip`在`ScrollView`中展示位置错误的问题
+
+### 2.5.7
+
+`2019-12-26`
+
+- Feat
+  - `Landscape`增加属性`transition`，用于自定义展示动效
+
+- Fix
+  - 修复`Tabs`在切换时可能导致的重绘问题[#627](https://github.com/didi/mand-mobile/issues/627)
+  - 修复`NoticeBar`动态变化内容时导致误触滚动的问题[#628](https://github.com/didi/mand-mobile/issues/628)
+  - 修复`ActionBar`, `NumberKeyboard`安全区留白兼容写法
+
+### 2.5.6
+
+`2019-11-23`
+
+- Fix
+  - 修复`Stepper`有初始值，最大和最小值是无法输入数字的问题，并优化了边界校验逻辑[#614](https://github.com/didi/mand-mobile/issues/614)
+
+### 2.5.5
+
+`2019-11-08`
+
+- Fix
+  - 修复`TabBar`在`keep-alive`中使用因窗口尺寸变更导致尺寸异常的问题[#608](https://github.com/didi/mand-mobile/issues/608)
+  - 修复`Skeleton`标题为空时也展示的问题
+
+### 2.5.4
+
+`2019-11-02`
+
+- Feat
+  - `ScrollView`增加方法`getOffsets`，用于获取当前滚动距离
+
+- Fix
+  - 修复`Swiper`因窗口尺寸变更回到第一屏的问题[#596](https://github.com/didi/mand-mobile/issues/596)
+  - 修复`Swiper`和`TabBar`在`keep-alive`中使用因窗口尺寸变更导致尺寸异常的问题[#599](https://github.com/didi/mand-mobile/issues/599)
+  - 修复`TabBar`尺寸计算兼容性问题
+  - 更新`TextareaItem`清空按钮的展示逻辑，只有当表单值不为空且获得焦点时才展示[#589](https://github.com/didi/mand-mobile/issues/589)
+
+### 2.5.3
+
+`2019-10-11`
+
+- Feat
+  - `TextareaItem`增加属性`clearable`[#589](https://github.com/didi/mand-mobile/issues/589)
+
+- Fix
+  - 修复`TabPicker`文字过长时无法拖动而展示不全的问题[#590](https://github.com/didi/mand-mobile/issues/590)
+  - 去除部分非必须reset样式[#586](https://github.com/didi/mand-mobile/issues/586)
+
+### 2.5.2
+
+`2019-09-20`
+
+- Feat
+  - `Picker`和`DatePicker`增加属性`keep-index`，用于设置当列数据发生变更时，保持上次停留位置
+
+- Fix
+  - 修复`Toast`被`Landscape`覆盖的问题
+  - 修复`TabBar`渲染崩溃的问题[#567](https://github.com/didi/mand-mobile/issues/567)
+  - 移除`Textarea`部分无用样式变量
+
+### 2.5.1
+
+`2019-09-04`
+
+- Feat
+  - 增加部分全局[reset样式](https://github.com/didi/mand-mobile/pull/539/files)
+  - 新增组件`Skeleton`
+  - 新增组件`TextareaItem`
+  - 新增组件`RadioGroup`和`RadioBox`
+  - `ActionBar`和`ResultPage`增加按钮配置属性`type `, `plain`, `round`, `inactive`, `loading`, `icon`, `iconSvg`[#544](https://github.com/didi/mand-mobile/issues/544)
+  - `Dialog`单例模式增加`onShow`和`onHide`
+  - `InputItem`增加属性`preview-type`用于设置预填展示时类型
+
+  ```html
+  <md-input-item
+    type="bankCard" <!-- 正常输入时表单类型 -->
+    preview-type="text" <!-- 预填展示时表单类型 -->
+    title="银行卡号"
+    value="6222 **** **** 1234"  <!-- 带掩码的预填值 -->
+  ></md-input-item>
+  ```
+
+- Fix
+  - 修复`Swiper`滑出滚动区域时无法正常翻页问题[#540](https://github.com/didi/mand-mobile/issues/540)
+  - 修改按钮背景色设置属性为`background`，容器元素为`div`
+
+### 2.4.2
+
+`2019-08-13`
+
+- Fix
+  - 修复`FieldItem`和`InputItem`标题和内容对齐的样式问题[#528](https://github.com/didi/mand-mobile/issues/528)
+  - 修复`FieldItem`和`InputItem`在安卓设备中内容字体加粗问题
+
+### 2.4.1
+
+`2019-08-03`
+
+- Fix
+  - 修复`InputItem`使用虚拟键盘输入时无法限制字符长度的问题[#524](https://github.com/didi/mand-mobile/issues/524)
+  - 修复`Amount`使用动效时数字的精度问题
+
+### 2.4.0
+
+`2019-07-29`
+
+- Design
+  - 🍭金融设计规范更新，`Popup`类组件标题栏`border-radius`由`8px`变为`40px`（大圆角模式），`Dialog`组件`border-radius`由`8px`变为`12px`
+
+  ![Design](https://pt-starimg.didistatic.com/static/starimg/img/FLXmXRBcDX1564369346467.jpg)
+
+- Feature
+  - `PopupTitleBar`增加以下属性:
+    - `large-radius`，用于支持大圆角模式
+    - `only-close`，用于快捷设置单个关闭按钮
+    - `title-align`，用于设置标题描述位置（left/right/center）
+  - `Picker`, `DatePicker`, `TabPicker`, `Selector`, `Cashier`增加属性`large-radius`用于支持支持大圆角模式
+  - `Selector`增加属性`hide-title-bar`，用于支持在无需确认模式下隐藏标题栏，增加插槽`header`，`footer`
+  - `Button`增加属性`loading`，用于设置加载状态
+  - `Dialog`属性`btns`中增加两个状态设置`disabled`（禁用态）/`loading`（加载态），并在`handler`中回传`btn`实例[#500](https://github.com/didi/mand-mobile/issues/500)
+
+    ```javascript
+    export default {
+      data () {
+        return {
+          btns: [{
+            text: '搜索',
+            handler: this.btnHandler
+          }]
+        }
+      },
+      methods: {
+        btnHandler (btn) {
+          this.$set(btn, 'loading', true)
+          this.$set(btn, 'text', '搜索中')
+        },
+      }
+    }
+    ```
+
+- Fix
+  - 修复`InputItem`和`Stepper`有默认值时会在组件初始化时误触发`change`事件[#495](https://github.com/didi/mand-mobile/issues/495)
+  - `Amount`大写模式兼容负数[#510](https://github.com/didi/mand-mobile/issues/510)
+
+### 2.3.3
+
+`2019-07-18`
+
+- Fix
+  - 修复`Toast`自定义位置时的样式兼容问题[#485](https://github.com/didi/mand-mobile/issues/485)
+  - 修复`TabPicker`设置`default-value`时，`TabBar`无法自动选中最后一项的问题[#488](https://github.com/didi/mand-mobile/issues/488)
+  - 修复`Selector`和`CheckList`点击图标无法选中的问题[#491](https://github.com/didi/mand-mobile/issues/491)
+  - 修复`Popup`无法覆盖`NoticeBar`的问题[#492](https://github.com/didi/mand-mobile/issues/492)
+  - 修复`Stepper`中部分`stylus`变量赋值错误
+
+### 2.3.2
+
+`2019-07-05`
+
+- Fix
+  - 修复`Codebox`初始化无法赋值的问题
+  - 修复`NumberKeyboard`按键点击易误触的体验问题[#477](https://github.com/didi/mand-mobile/issues/477)
+
+### 2.3.1
+
+`2019-06-22`
+
+- Feature
+  - `NumberKeyboard`增加属性`isHideConfirm`，用来控制确认键点击动作是否自动隐藏键盘[#474](https://github.com/didi/mand-mobile/issues/474)
+  - `NumberKeyboard`增加默认插槽
+
+- Fix
+  - 修复`Slider`的进度条计算错误[#472](https://github.com/didi/mand-mobile/issues/472)
+  - 修复`NumberKeyboard`按键点击易误触的体验问题[#477](https://github.com/didi/mand-mobile/issues/477)
+
+### 2.3.0
+
+`2019-06-13`
+
+- Feature
+  - `Check`和`CheckList`增加图标大小、位置等相关配置属性[#383](https://github.com/didi/mand-mobile/issues/383)
+  - `CheckList`插槽增加`index`、`selected`字段
+
+  ```html
+    <template>
+      <md-check-list :options="data">
+        <template slot-scope="{ option, index, selected }">
+          <!-- xxx -->
+        </template>
+      </md-check-list>
+    </template>
+  ```
+
+  - `RadioList`插槽增加`index`、`selected`字段，且当`icon`置空时不展示图标
+  - `Selector`增加属性`multi`，支持多选[#296](https://github.com/didi/mand-mobile/issues/296)
+  - `Toast`增加属性`component`，支持以组件形式引入并定制[#445](https://github.com/didi/mand-mobile/issues/445)
+  - `ScrollView`增加属性`is-prevent`，支持设置当在非可滚动区域触发滚动时是否也阻止默认行为[#454](https://github.com/didi/mand-mobile/issues/454)
+
+- Fix
+  - 修复`Swiper`属性`isLoop`为true时，autoplay失效的问题[#452](https://github.com/didi/mand-mobile/issues/452)
+  - 修复`Dialog`属性`maskClosable`为true时，关闭弹窗导致报错[#471](https://github.com/didi/mand-mobile/issues/471)
+
+
 ### 2.2.4
 
 `2019-05-26`
@@ -10,7 +242,7 @@ toc: hidden
 - Fix
   - 修复`TabBar`第一项和最后一项选中后无法自动修复位置的问题[#434](https://github.com/didi/mand-mobile/issues/434)
   - `TabBar`选项内部文字不可选中
-  
+
 ### 2.2.3
 
 `2019-05-25`

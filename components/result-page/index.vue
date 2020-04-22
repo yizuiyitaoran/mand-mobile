@@ -9,9 +9,14 @@
       <md-button
         v-for="(button, index) of buttons"
         :type="button.type"
-        plain
-        inline
+        :plain="button.plain === undefined || button.plain"
+        :round="button.round"
+        :inactive="button.inactive"
+        :loading="button.loading"
+        :icon="button.icon"
+        :icon-svg="button.iconSvg"
         size="small"
+        inline
         :key="index"
         @click="button.handler">
         {{button.text}}
@@ -54,11 +59,13 @@ export default {
     },
   },
 
-  data() {
-    const pre = '//manhattan.didistatic.com/static/manhattan/mand-mobile/result-page/2.1/'
-    const data = {
-      actualImgUrl: this.imgUrl || `${pre}${this.type}.png`,
-      actualText:
+  computed: {
+    actualImgUrl() {
+      const pre = '//manhattan.didistatic.com/static/manhattan/mand-mobile/result-page/2.1/'
+      return this.imgUrl || `${pre}${this.type}.png`
+    },
+    actualText() {
+      return (
         this.text ||
         {
           // 网络连接异常
@@ -66,16 +73,19 @@ export default {
           // 暂无信息
           empty: '\u6682\u65e0\u4fe1\u606f',
         }[this.type] ||
-        '',
-      actualSubText:
+        ''
+      )
+    },
+    actualSubText() {
+      return (
         this.subtext ||
         {
           // 您要访问的页面已丢失
           lost: '\u60a8\u8981\u8bbf\u95ee\u7684\u9875\u9762\u5df2\u4e22\u5931',
         }[this.type] ||
-        '',
-    }
-    return data
+        ''
+      )
+    },
   },
 }
 </script>

@@ -1,14 +1,14 @@
 <template>
   <div
     class="md-scroll-view"
-    @touchstart="$_onScollerTouchStart"
-    @touchmove="$_onScollerTouchMove"
-    @touchend="$_onScollerTouchEnd"
-    @touchcancel="$_onScollerTouchEnd"
-    @mousedown="$_onScollerMouseDown"
-    @mousemove="$_onScollerMouseMove"
-    @mouseup="$_onScollerMouseUp"
-    @mouseleave="$_onScollerMouseUp"
+    @touchstart="$_onScrollerTouchStart"
+    @touchmove="$_onScrollerTouchMove"
+    @touchend="$_onScrollerTouchEnd"
+    @touchcancel="$_onScrollerTouchEnd"
+    @mousedown="$_onScrollerMouseDown"
+    @mousemove="$_onScrollerMouseMove"
+    @mouseup="$_onScrollerMouseUp"
+    @mouseleave="$_onScrollerMouseUp"
   >
     <div class="scroll-view-header" v-if="$slots.header">
       <slot name="header"></slot>
@@ -18,6 +18,7 @@
       :class="{
         'horizon': scrollingX && !scrollingY
       }"
+      scroll-wrapper
     >
       <div
         v-if="hasRefresher"
@@ -49,8 +50,7 @@
   </div>
 </template>
 
-<script>
-import {debounce} from '../_util'
+<script>import {debounce} from '../_util'
 import Scroller from '../_util/scroller'
 import {render} from '../_util/render'
 
@@ -89,6 +89,10 @@ export default {
       type: Number,
       default: 45,
     },
+    isPrevent: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -126,13 +130,22 @@ export default {
       return !!(this.$slots.more || this.$scopedSlots.more)
     },
   },
+  watch: {
+    autoReflow(val) {
+      if (val) {
+        this.$_initAutoReflow()
+      } else {
+        this.$_destroyAutoReflow()
+      }
+    },
+  },
   mounted() {
     if (!this.manualInit) {
       this.$_initScroller()
     }
   },
   destroyed() {
-    this.reflowTimer && clearInterval(this.reflowTimer)
+    this.$_destroyAutoReflow()
   },
   methods: {
     $_initScroller() {
@@ -173,11 +186,11 @@ export default {
           () => {
             this.isRefreshActive = true
             this.isRefreshing = false
+            this.$emit('refreshActive')
           },
           () => {
             this.isRefreshActive = false
             this.isRefreshing = false
-            this.$emit('refreshActive')
           },
           () => {
             this.isRefreshActive = false
@@ -204,9 +217,13 @@ export default {
       }
     },
     $_initAutoReflow() {
+      this.$_destroyAutoReflow()
       this.reflowTimer = setInterval(() => {
         this.reflowScroller()
       }, 100)
+    },
+    $_destroyAutoReflow() {
+      this.reflowTimer && clearInterval(this.reflowTimer)
     },
     $_checkScrollerEnd() {
       if (!this.scroller) {
@@ -233,7 +250,7 @@ export default {
       return this.scrollingX ? 90 - angle : angle
     },
     // MARK: events handler
-    $_onScollerTouchStart(event) {
+    $_onScrollerTouchStart(event) {
       // event.target.tagName && event.target.tagName.match(/input|textarea|select/i)
       /* istanbul ignore if */
       if (!this.scroller) {
@@ -243,12 +260,18 @@ export default {
       this.startY = event.targetTouches[0].pageY
       this.scroller.doTouchStart(event.touches, event.timeStamp)
     },
-    $_onScollerTouchMove(event) {
+    $_onScrollerTouchMove(event) {
       /* istanbul ignore if */
       if (!this.scroller) {
         return
       }
-      event.preventDefault()
+      let hadPrevent = false
+
+      if (this.isPrevent) {
+        event.preventDefault()
+
+        hadPrevent = true
+      }
 
       this.currentX = event.targetTouches[0].pageX
       this.currentY = event.targetTouches[0].pageY
@@ -260,6 +283,10 @@ export default {
         }
       }
 
+      if (!hadPrevent && event.cancelable) {
+        event.preventDefault()
+      }
+
       this.scroller.doTouchMove(event.touches, event.timeStamp, event.scale)
 
       const boundaryDistance = 15
@@ -268,18 +295,23 @@ export default {
 
       const pX = this.currentX - scrollLeft
       const pY = this.currentY - scrollTop
-      if (pX > document.documentElement.clientWidth - boundaryDistance || pY > document.documentElement.clientHeight - boundaryDistance || pX < boundaryDistance || pY < boundaryDistance) {
+      if (
+        pX > document.documentElement.clientWidth - boundaryDistance ||
+        pY > document.documentElement.clientHeight - boundaryDistance ||
+        pX < boundaryDistance ||
+        pY < boundaryDistance
+      ) {
         this.scroller.doTouchEnd(event.timeStamp)
       }
     },
-    $_onScollerTouchEnd(event) {
+    $_onScrollerTouchEnd(event) {
       /* istanbul ignore if */
       if (!this.scroller) {
         return
       }
       this.scroller.doTouchEnd(event.timeStamp)
     },
-    $_onScollerMouseDown(event) {
+    $_onScrollerMouseDown(event) {
       /* istanbul ignore if */
       if (!this.scroller) {
         return
@@ -297,7 +329,7 @@ export default {
       )
       this.isMouseDown = true
     },
-    $_onScollerMouseMove(event) {
+    $_onScrollerMouseMove(event) {
       /* istanbul ignore if */
       if (!this.scroller || !this.isMouseDown) {
         return
@@ -322,7 +354,7 @@ export default {
       )
       this.isMouseDown = true
     },
-    $_onScollerMouseUp(event) {
+    $_onScrollerMouseUp(event) {
       /* istanbul ignore if */
       if (!this.scroller || !this.isMouseDown) {
         return
@@ -352,6 +384,13 @@ export default {
         return
       }
       this.scroller.scrollTo(left, top, animate)
+    },
+    getOffsets() {
+      /* istanbul ignore if */
+      if (!this.scroller) {
+        return {left: 0, top: 0}
+      }
+      return this.scroller.getValues()
     },
     reflowScroller(force = false) {
       const container = this.container
@@ -412,8 +451,7 @@ export default {
     },
   },
 }
-
-</script>
+</script>
 
 <style lang="stylus">
 .md-scroll-view
@@ -434,6 +472,7 @@ export default {
   .scroll-view-container
     clearfix()
     position relative
+    z-index 1
     // display inline-block
     .scroll-view-refresh
       clearfix()

@@ -34,6 +34,34 @@ Vue.component(Radio.name, Radio)
 
 ---
 
+
+#### RadioBox Props
+Radio box <sup class="version-after">2.5.0+</sup>
+| Props | Description | Type | Default | Note |
+|----|-----|------|------|------|
+|name|unique name|any|`true`|-|
+|v-model|selected name|any|`false`|-|
+|disabled|whether disable selection or not|Boolean|`false`|-|
+
+---
+
+#### RadioGroup Props
+Check multiple radios. Combine with `Radio` or `RadioBox` <sup class="version-after">2.5.0+</sup>
+
+| Props | Description | Type | Default | Note |
+|----|-----|------|------|------|
+|v-model|selected names|Array|-|-|
+
+#### RadioGroup Methods
+
+##### check(name)
+
+| Arg | Description | Type | Default |
+|----|-----|------|------|
+|name|name will be selected|String|-|
+
+---
+
 #### Radio List Props
 |Props | Description | Type | Default | Note|
 |----|-----|------|------|------|
@@ -73,7 +101,7 @@ Selected option changed
 ```html
 <template>
   <md-radio-list :options="data">
-    <template slot-scope="{ option }">
+    <template slot-scope="{ option, index, selected }">
       <div class="custom-title" v-text="option.text"></div>
       <div class="custom-brief">{{ option.text }}的自定义描述</div>
     </template>

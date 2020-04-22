@@ -1,7 +1,4 @@
-/*
- * components
- */
-// action-bar
+/// action-bar
 action-bar-width = 100%
 action-bar-height = 100px
 action-bar-padding-v = v-gap-md
@@ -10,7 +7,7 @@ action-bar-button-gap = 22px
 action-bar-slot-height = button-height
 action-bar-zindex = 100
 
-// action-sheet
+/// action-sheet
 action-sheet-height = 120px
 action-sheet-padding-h = h-gap-sl
 action-sheet-color = color-text-body
@@ -22,12 +19,12 @@ action-sheet-disabled-opacity = opacity-disabled
 action-sheet-cancel-gap-bg = color-bg-base
 action-sheet-zindex = 1101
 
-// agree
+/// agree
 agree-fill = color-primary
-agree-fill-inverse = color-bg-disabled
+// agree-fill-inverse = color-bg-disabled
 agree-disabled-opacity = opacity-disabled
 
-// bill
+/// bill
 bill-bg = color-bg-base
 bill-name-font-size = font-caption-large
 bill-name-color = color-text-body
@@ -36,7 +33,7 @@ bill-no-color = color-text-placeholder
 bill-description-font-size = font-minor-large
 bill-description-color = color-text-caption
 
-// button
+/// button
 button-primary-fill = color-primary
 button-default-fill = color-bg-inverse
 button-disabled-fill = color-bg-disabled
@@ -58,7 +55,7 @@ button-warning-color = color-text-base-inverse
 button-default-plain-color = button-default-color
 button-primary-plain-color = button-primary-fill
 button-warning-plain-color = button-warning-fill
-button-disabled-plain-color = color-text-disabled 
+button-disabled-plain-color = color-text-disabled
 
 button-height = 100px
 button-font-size = font-caption-large
@@ -69,7 +66,7 @@ button-small-font-size = font-body-large
 
 button-radius = radius-normal
 
-// captcha
+/// captcha
 captcha-zindex = 1301
 captcha-title-color = color-text-base
 captcha-title-font-size = font-heading-normal
@@ -81,7 +78,7 @@ captcha-brief-color = color-text-caption
 captcha-countbtn-gap = h-gap-lg
 captcha-btn-color = color-primary
 
-// cashier
+/// cashier
 cashier-bg = color-bg-inverse
 cashier-choose-title-font-size = font-body-large // 支付标题
 cashier-choose-title-color = color-text-minor
@@ -94,19 +91,19 @@ cashier-choose-channel-title-color = color-text-body
 cashier-choose-channel-title-action-font-size = font-body-large // 支付渠道动作标题
 cashier-choose-channel-title-action-color = color-primary
 cashier-choose-channel-desc-font-size = font-minor-large // 支付渠道备注
-cashier-choose-channel-desc-color = color-text-caption 
+cashier-choose-channel-desc-color = color-text-caption
 cashier-choose-channel-icon-color = color-primary
 cashier-choose-more-font-size = font-minor-large // 更多支付方式
 cashier-choose-more-color = color-text-minor
 
-// chart
+/// chart
 chart-line-color = #ccc
 chart-path-color = color-primary
 chart-text-color = color-text-minor
 chart-label-size = 22px
 chart-value-size = 20px
 
-// cell-item
+/// cell-item
 cell-item-min-height = 100px
 cell-item-padding-v = 32px
 cell-item-multilines-padding-v = 36px
@@ -118,10 +115,9 @@ cell-item-right-color = color-text-caption
 cell-item-right-font-size = font-body-large
 cell-item-border-color = color-border-base
 
-// check
+/// check
 check-color = color-text-highlight
 
-// checkbox
 checkbox-color = color-text-base
 checkbox-font-size = font-caption-normal
 checkbox-disabled-color = color-text-disabled
@@ -130,10 +126,7 @@ checkbox-active-border-color = color-primary
 checkbox-border-color = color-border-element
 checkbox-border-radius = radius-normal
 
-// checklist
-checklist-active-color = color-primary
-
-// codebox
+/// codebox
 codebox-font-size = 50px
 codebox-width = 66px
 codebox-height = 70px
@@ -147,13 +140,13 @@ codebox-dot-color = color-text-base
 codebox-holder-space = h-gap-sm
 codebox-disabled-color = color-text-disabled
 
-// date-picker
+/// date-picker
 date-picker-font-size = font-caption-normal
 date-time-picker-font-size = font-body-large
 
-// dialog
+/// dialog
 dialog-width = 606px
-dialog-radius = 8px
+dialog-radius = 12px
 dialog-body-padding = 52px
 dialog-title-font-size = 40px
 dialog-title-color = color-text-base
@@ -169,9 +162,8 @@ dialog-icon-size = 100px
 dialog-icon-fill = color-text-caption
 dialog-zindex = 1500
 
-// drop-menu
+/// drop-menu
 drop-menu-height = 110px
-drop-menu-zindex = 1200
 drop-menu-bar-bg = color-bg-inverse
 drop-menu-bar-border-color = color-border-base
 drop-menu-list-bg = color-bg-inverse
@@ -179,8 +171,9 @@ drop-menu-color = color-primary
 drop-menu-font-size = font-caption-normal
 drop-menu-font-weight = font-weight-medium
 drop-menu-disabled-opacity = opacity-disabled
+drop-menu-zindex = 1200
 
-// field
+/// field
 field-padding-h = h-gap-sl
 field-padding-v = v-gap-sl
 field-bg-color = color-bg-inverse
@@ -189,12 +182,13 @@ field-footer-gap = v-gap-md
 field-title-color = color-text-base
 field-title-font-size = font-caption-large
 field-title-font-weight = font-weight-medium
+field-title-font-weight-android = bold
 field-brief-color = color-text-caption
 field-brief-font-size = font-minor-large
 field-action-color = color-text-caption
 field-action-font-size = font-minor-large
 
-// field-item
+/// field-item
 field-item-min-height = 100px
 field-item-padding-v = 30px
 field-item-title-width = 160px
@@ -208,28 +202,30 @@ field-item-addon-font-size = font-body-large
 field-item-border-color = color-border-base
 field-item-children-font-size = font-minor-large
 
-// detail-item
+/// detail-item
 detail-item-font-size = font-body-large
 detail-item-title-color = color-text-caption
 detail-item-content-color = color-text-body
 detail-item-gap = v-gap-sm
 
-// icon
+/// icon
+icon-size-xss = 16px
 icon-size-xs = 20px
 icon-size-sm = 24px
 icon-size-md = 32px
 icon-size-lg = 42px
 icon-font-family = url("https://manhattan.didistatic.com/static/manhattan/mand-mobile/icon/2.0.2/iconfont.woff") format("woff"), url("https://manhattan.didistatic.com/static/manhattan/mand-mobile/icon/2.0.2/iconfont.ttf") format("truetype")
 
-// image-viewer
-image-viewer-zindex = 1001
+/// image-viewer
 image-viewer-index-font-size = 32px
 image-viewer-index-bottom = 100px
+image-viewer-zindex = 1001
 
-// input-item
+/// input-item
 input-item-height = 100px
 input-item-font-size = font-caption-normal
 input-item-font-weight = font-weight-medium
+input-item-font-weight-android = bold
 input-item-title-latent-font-size = font-body-normal
 input-item-font-size-large = 80px
 input-item-font-size-error = font-minor-large
@@ -240,32 +236,44 @@ input-item-color-disabled = color-text-caption
 input-item-color-error = color-text-error
 input-item-color-brief = color-text-caption
 input-item-placeholder = color-text-placeholder
-input-item-color-highlight = color-text-base 
+input-item-color-highlight = color-text-base
 input-item-icon = color-text-placeholder // delete icon
 
-// slider
+/// textarea-item
+textarea-item-font-size = font-caption-normal
+textarea-item-font-weight = font-weight-medium
+textarea-item-line-height = 1.4
+textarea-item-color = color-text-base
+textarea-item-icon = color-text-placeholder // delete icon
+textarea-item-color-error = color-text-error
+textarea-item-color-disabled = color-text-caption
+textarea-item-placeholder-color = color-text-placeholder
+textarea-item-placeholder-weight = font-weight-normal
+
+
+/// slider
 slider-bg-base = color-bg-base
 slider-bg-tap = color-primary
 slider-handle-bg = color-bg-inverse
 
-// landscape
+/// landscape
 landscape-width = 540px
-landscape-radius = radius-normal
+// landscape-radius = radius-normal
 landscape-fullscreen-bg = color-bg-inverse
-landscape-zindex = 1700
+landscape-zindex = 1600
 
-// notice-bar
+/// notice-bar
 notice-bar-fill = rgba(89, 158, 248, .08)
 notice-bar-font-size = font-body-normal
 notice-bar-color = color-primary
-notice-bar-zindex = 1301
 notice-bar-border-radius = 32px
 notice-bar-fill-warning = #FFEEEF
 notice-bar-color-warning = #FF5B60
 notice-bar-fill-activity = #FFEDDE
 notice-bar-color-activity = #FF843D
+notice-bar-zindex = 999
 
-// number-keyboard
+/// number-keyboard
 number-keyboard-width = 100%
 number-keyboard-height = 428px
 number-keyboard-bg = color-bg-base
@@ -281,11 +289,7 @@ number-keyboard-key-confirm-color = color-text-base-inverse
 number-keyboard-key-border-color = color-border-base
 number-keyboard-zindex = 1302
 
-// overlay
-overlay-bg = color-bg-inverse
-overlay-zindex = 1501
-
-// picker
+/// picker
 picker-padding-h = h-gap-sl
 picker-font-size = font-caption-normal
 picker-disabled-opacity = .2
@@ -295,11 +299,12 @@ picker-font-weight-active = font-weight-medium
 picker-border-color = color-border-base
 picker-zindex = 1100
 
-// popup
-popup-title-bar-bg = color-bg-base
+/// popup
+popup-title-bar-bg = color-bg-inverse
 popup-title-bar-height = 120px
 popup-title-bar-height-large = 180px
 popup-title-bar-radius = 8px
+popup-title-bar-radius-large = 40px
 popup-title-bar-font-size-button = font-caption-large
 popup-title-bar-font-weight-button = font-weight-medium
 popup-title-bar-font-size-title = 40px
@@ -311,22 +316,22 @@ popup-title-bar-color-button-right = color-text-highlight
 popup-mask-bg = color-mask
 popup-zindex = 1000
 
-// radio
+///radio
 radio-color = color-text-highlight
 
-// result-page
+/// result-page
 result-page-image-size = 260px
 result-page-title-font-size = font-caption-normal
 result-page-describe-font-size = font-body-large
 result-page-title-color = color-text-base
 result-page-describe-color = color-text-caption
 
-// selector
+/// selector
 selector-disabled-opacity = .2
 selector-active-color = color-primary
 selector-zindex = 1102
 
-// stepper
+/// stepper
 stepper-fill = color-bg-base
 stepper-disabled-opacity = opacity-disabled
 stepper-color = color-text-base
@@ -335,32 +340,32 @@ stepper-input-font-size = font-body-normal
 stepper-height = 50px
 stepper-width-button = 54px
 stepper-width-input = 68px
-stepper-radius-button = 0
+stepper-radius-button = 2px
 stepper-radius-input = 0
 
-// steps
+/// steps
 steps-color = color-border-base
 steps-color-active = color-primary
 steps-border-size = 1px
 steps-icon-size = 32px // icon size
 steps-text-color = color-text-body
-steps-desc-color = color-text-caption
 steps-text-font-size = font-body-large
 steps-text-gap-horizontal = 20px
 steps-text-gap-vertical = 40px
+steps-desc-color = color-text-caption
 steps-desc-font-size = font-body-normal
 steps-transition-delay = .15s
 
-// switch
+/// switch
 switch-fill = color-primary
 switch-fill-inverse = color-bg-disabled
 switch-handle-color = #FFF
 switch-item-color-disabled = opacity-disabled
 
-// swiper
+/// swiper
 swiper-indicator-fill = color-primary
 
-// tabs
+/// tabs
 tab-font-size = font-body-large
 tab-font-weight = font-weight-medium
 tab-text-color = color-text-minor
@@ -372,20 +377,20 @@ tab-ink-height = 3px
 tab-offset = h-gap-sl
 tab-item-gap = h-gap-md
 
-//tab-picker
+/// tab-picker
 tab-picker-height = 500px
 tab-picker-h-gap = h-gap-sl
 tab-picker-bg = color-bg-inverse
 tab-picker-zindex = 1102
 
-// tag
+/// tag
 tag-color = color-primary
 tag-fillet-radius = 2px
 tag-large-font-size = font-body-normal
 tag-small-font-size = font-minor-normal
 tag-tiny-font-size = 12px
 
-// tip
+/// tip
 tip-fill = #41485D
 tip-fill-opacity = .8
 tip-font-size = font-minor-large
@@ -393,15 +398,15 @@ tip-color = color-text-base-inverse
 tip-radius = 1000px
 tip-padding = 15px 32px
 tip-close-size = 32px
-tip-zindex = 1303
 tip-shadow = 0 5px 20px rgba(0, 0, 0, .08)
+tip-zindex = 1303
 
-// toast
+/// toast
 toast-fill = rgba(65, 72, 93, .77)
 toast-font-size = font-body-large
 toast-color = #fff
 toast-radius = radius-normal
 toast-padding = 20px 30px
-toast-zindex = 1600
+toast-zindex = 1700
 
 

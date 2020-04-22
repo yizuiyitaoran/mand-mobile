@@ -12,6 +12,8 @@
       <md-popup-title-bar
         :title="title"
         :describe="describe"
+        :large-radius="largeRadius"
+        only-close
         @cancel="$_onCancel"
       >
         <md-icon name="close" size="lg" slot="cancel" />
@@ -19,6 +21,8 @@
       <div class="md-tab-picker-content">
           <md-tabs
             v-model="currentTab"
+            :key="tabsTmpKey"
+            :inkLength="100"
             ref="tabs"
           >
             <md-scroll-view
@@ -36,7 +40,6 @@
                   :value="pane.value"
                   :options="pane.options"
                   :is-slot-scope="hasSlot"
-                  :key="tabsTmpKey"
                   @input="$_onSelectPaneItem($event, index)"
                   icon=""
                   icon-inverse=""
@@ -151,6 +154,7 @@ export default {
           target = null
         }
         panes.push(pane)
+        this.currentTab = pane.name // select the tab corresponding to this pane
       }
 
       return panes
@@ -261,8 +265,9 @@ export default {
   .md-tab-bar-list
     justify-content flex-start
     .md-tab-bar-item
-      margin 0 60px 0 0
-      padding 0
+      flex none
+      margin 0 0
+      padding 0 30px
       font-size font-caption-normal
   .md-tab-pane
     padding-left tab-picker-h-gap

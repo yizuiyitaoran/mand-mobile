@@ -35,12 +35,12 @@ title: Mand Mobile
 #### Browser Support
 
 * Modern browsers
-* iOS 6+
+* iOS 8+
 * Android 4.0+
 
 #### Quickstart
 
-Please refer to <a href="#/docs/started">Quickstart</a>
+Please refer to <a href="#/en-US/docs/started">Quickstart</a>
 
 #### Links
 
@@ -55,7 +55,11 @@ Please refer to <a href="#/docs/started">Quickstart</a>
 
 #### Contribution
 
-Please read our <a href="#/docs/development">Development Guide</a> first. If you'd like to help us improve Mand Mobile, please create <a href="https://github.com/didi/mand-mobile/issues" targe="_blank">Issue</a> or <a href="https://github.com/didi/mand-mobile/pulls" targe="_blank">Pull Request</a>.
+Please read our <a href="#/en-US/docs/development">Development Guide</a> first. If you'd like to help us improve Mand Mobile, please create <a href="https://github.com/didi/mand-mobile/issues" targe="_blank">Issue</a> or <a href="https://github.com/didi/mand-mobile/pulls" targe="_blank">Pull Request</a>.
+
+##### Contributors
+
+<!-- DEMO -->
 
 #### Community
 

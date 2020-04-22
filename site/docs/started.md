@@ -6,13 +6,13 @@ title: 快速上手
 
 **新项目**可通过[vue-cli](https://github.com/vuejs/vue-cli)初始化集成`mand-mobile`，**现有项目**集成请参考<a href="javascript:jumpAnchor('安装')">安装</a>
 
-* Vue CLI 2/3([模板](https://github.com/mand-mobile/mand-mobile-template))(支持1.x)
+* **Vue CLI 2/3**([模板](https://github.com/mand-mobile/mand-mobile-template))(支持1.x)
 
 ```shell
 vue init mand-mobile/mand-mobile-template my-mand-mobile-project
 ```
 
-* Vue CLI 3([插件](https://github.com/mand-mobile/vue-cli-plugin-mand))(支持1.x/2.x)
+* **Vue CLI 3**([插件](https://github.com/mand-mobile/vue-cli-plugin-mand))(支持1.x/2.x)
 
 ```shell
 vue create my-project
@@ -21,9 +21,23 @@ npm install --save-dev vue-cli-plugin-mand
 vue invoke mand
 ```
 
-* Vue CLI 3([示例](https://github.com/mand-mobile/vue-cli3-example))(支持1.x/2.x)
+* **Vue CLI 3**([示例](https://github.com/mand-mobile/vue-cli3-example))(支持1.x/2.x)
 
-* Nuxt([示例](https://github.com/mand-mobile/nuxt-example))
+* **Nuxt**([示例](https://github.com/mand-mobile/nuxt-example))
+
+#### Vue UI
+
+通过[Vue UI](https://cli.vuejs.org/zh/guide/creating-a-project.html#%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2)以图形化界面创建和管理项目，并通过安装插件[vue-cli-plugin-mand](https://www.npmjs.com/package/vue-cli-plugin-mand)集成`mand-mobile`
+
+* 启动`Vue UI`
+
+```shell
+vue ui
+```
+
+* 完成项目创建后，点击**插件**并搜索`mand-mobile`，点击搜索结果完成安装
+
+<img src="https://pt-starimg.didistatic.com/static/starimg/img/3zEzXVU28N1565160574175.png"/>
 
 #### 安装
 
@@ -37,11 +51,13 @@ yarn add mand-mobile
 
 ##### **浏览器引入**
 
-在浏览器中使用`script`和`link`标签直接引入文件，并使用全局变量 `window['mand-mobile']`
+在浏览器中使用`script`和`link`标签直接引入文件，并使用全局变量 `window['mand-mobile']`。
 
 在`npm`发布包内的`mand-mobile/lib`或`mand-mobile/lib-vw`目录下提供了`JS`以及`CSS` bundle，参考<a href="javascript:jumpAnchor('产出包目录')">产出包目录</a>。   
 
 你也可以通过[![](https://data.jsdelivr.com/v1/package/npm/mand-mobile/badge)](https://www.jsdelivr.com/package/npm/mand-mobile)或者[UNPKG](https://unpkg.com/mand-mobile/lib/)进行下载。
+
+> 建议直接使用 CDN 引入时锁定版本，以免将来受到非兼容性更新的影响。锁定版本的方法请查看[unpkg.com](unpkg.com)。
 
 #### 引入
 
@@ -111,14 +127,6 @@ Vue.use(mandMobile)
 
 #### 使用前准备
 
-##### Normalize
-
-为标准化浏览器元素的样式，推荐引入[Normalize.css](http://necolas.github.io/normalize.css/)
-
-##### FastClick
-
-为避免[浏览器兼容问题](https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile)引起的点击问题, 推荐引入[FastClick](https://github.com/ftlabs/fastclick)
-
 ##### 产出包目录
 
 [产出包](https://unpkg.com/mand-mobile/)中包含以下几种不同目录，分别适用于不同场景的代码，可根据实际需要选择一个目录加载：
@@ -181,113 +189,15 @@ webpackConfig.plugins.push(new webpack.LoaderOptionsPlugin({
 }))
 ```
 
+> [如何使配置仅作用于`mand-mobile`?](https://github.com/didi/mand-mobile/issues/103)
+
+#### 配置主题和字体
+
+* [改变主题](#/zh-CN/docs/theme)
+* [使用本地字体](#/zh-CN/docs/components/basic/icon?anchor=引入本地字体文件)
+
 #### 使用
 
-这是一个使用`Mand Mobile`组件开发而成的表单页面，更多的组件使用方法可在[组件概览](/mand-mobile/docs/preview)中找到。
+这是一个使用`Mand Mobile`组件开发而成的表单页面
 
-```vue
-<template>
-  <div id="app">
-    <md-field class="block" title="投保人">
-      <md-input-item
-        title="投保人姓名"
-        placeholder="请填写投保人姓名"
-      ></md-input-item>
-      <md-input-item
-        title="身份证号"
-        placeholder="请填写投保人身份证号"
-      ></md-input-item>
-    </md-field>
-    <md-field class="block" title="被保人">
-      <md-input-item
-        title="被保人姓名"
-        placeholder="请填写被保人姓名"
-      ></md-input-item>
-      <md-field-item
-        title="与投保人关系"
-        :content="relation"
-        arrow
-        @click="isPickerShow = true"
-        solid
-      ></md-field-item>
-      <md-picker
-        v-model="isPickerShow"
-        :data="pickerData"
-        title="选择与投保人关系"
-      ></md-picker>
-      <md-input-item
-        title="身份证号"
-        placeholder="请填写被保人身份证号"
-      ></md-input-item>
-      <md-input-item
-        title="手机号"
-        type="phone"
-        placeholder="请填写被保人手机号"
-      ></md-input-item>
-    </md-field>
-    <md-agree class="agree">
-      本人承诺投保人已充分了解本保险产品，并保证投保信息的真实性，理解并同意
-    </md-agree>
-    <md-action-bar :actions="actionBarData">
-      &yen;128.00
-    </md-action-bar>
-  </div>
-</template>
-
-<script>
-import {
-  Agree,
-  ActionBar,
-  Field,
-  FieldItem,
-  InputItem,
-  Picker
-} from 'mand-mobile'
-
-export default {
-  name: 'app',
-
-  components: {
-    [Agree.name]: Agree,
-    [ActionBar.name]: ActionBar,
-    [Field.name]: Field,
-    [FieldItem.name]: FieldItem,
-    [InputItem.name]: InputItem,
-    [Picker.name]: Picker
-  },
-
-  data () {
-    return {
-      relation: '本人',
-      isPickerShow: false,
-      actionBarData: [{
-        text: '我要投保'
-      }],
-      pickerData: [[{text:'本人'},{text:'父母'},{text:'配偶'},{text:'子女'}]]
-    }
-  }
-}
-</script>
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-}
-body{
-  background: #f0f0f0;
-}
-.detail{
-  background: #fff;
-  font-size: .24rem;
-}
-.block{
-  margin-top: .32rem;
-}
-.agree{
-  padding: .32rem;
-  font-size: .24rem;
-  color: #666;
-}
-</style>
-```
+<iframe src="https://codesandbox.io/embed/vue-template-ckqbz?fontsize=14&hidenavigation=1&module=%2Fsrc%2FApp.vue" title="Mand Mobile Quick Start" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media" style="width:100%; height:1000px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>

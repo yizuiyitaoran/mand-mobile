@@ -35,12 +35,12 @@ title: Mand Mobile
 #### 浏览器支持
 
 * 现代浏览器
-* iOS 6+
+* iOS 8+
 * Android 4.0+
 
 #### 快速上手
 
-请参考<a href="#/docs/started">快速上手</a>
+请参考<a href="#/zh-CN/docs/started">快速上手</a>
 
 #### 链接
 
@@ -55,7 +55,11 @@ title: Mand Mobile
 
 #### 如何贡献
 
-在以任何形式的参与前，请先阅读<a href="#/docs/development">开发指南</a>。如有任何的意见或建议，欢迎您通过创建<a href="https://github.com/didi/mand-mobile/issues" targe="_blank">Issue</a>或<a href="https://github.com/didi/mand-mobile/pulls" targe="_blank">Pull Request</a>的方式告知我们。
+在以任何形式的参与前，请先阅读<a href="#/zh-CN/docs/development">开发指南</a>。如有任何的意见或建议，欢迎您通过创建<a href="https://github.com/didi/mand-mobile/issues" targe="_blank">Issue</a>或<a href="https://github.com/didi/mand-mobile/pulls" targe="_blank">Pull Request</a>的方式告知我们。
+
+##### 贡献者
+
+<!-- DEMO -->
 
 #### 社区互助
 

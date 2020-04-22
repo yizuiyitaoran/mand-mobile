@@ -19,17 +19,18 @@
       @click="$_check(item, index)"
     >
       <template v-if="hasSlot">
-        <slot :option="item"></slot>
+        <slot :option="item" :index="index" :selected="value.indexOf(item.value) > -1"></slot>
       </template>
       <md-check
         v-if="!alignCenter"
         :name="item.value"
         :disabled="item.disabled"
-        size="md"
-        icon="right"
-        icon-inverse=""
-        icon-disabled=""
-        slot="right"
+        :size="iconSize"
+        :icon="icon"
+        :icon-inverse="iconInverse"
+        :icon-disabled="iconDisabled"
+        :icon-svg="iconSvg"
+        :slot="iconPosition === 'right' ? 'right' : 'left'"
       />
     </md-cell-item>
   </md-check-group>
@@ -38,9 +39,12 @@
 <script>import Check from './index'
 import CheckGroup from './group'
 import CellItem from '../cell-item'
+import checkMixin from './mixin'
 
 export default {
   name: 'md-check-list',
+
+  mixins: [checkMixin],
 
   components: {
     [Check.name]: Check,
@@ -97,6 +101,7 @@ export default {
   .md-check
     margin-top 0
     margin-bottom 0
+    pointer-events none
   .md-cell-item-body.multilines .md-cell-item-title
     font-weight font-weight-medium
 

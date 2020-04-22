@@ -22,18 +22,21 @@ Vue.component(Picker.name, Picker)
 |Props | Description | Type | Default | Note|
 |----|-----|------|------|------|
 |v-model|display picker or not|Boolean|`false`|-|
-|data|data source|Array<{value, lable, ...}>[]|`[]`|-|
+|data|data source|Array<{value, label, ...}>[]|`[]`|-|
 |cols|number of columns|Number|`1`|-|
 |default-index|indexes of initially selected items in each column|Array|`[]`|-|
-|default-value|values of initially selected items in each column|Array|`[]`|Available key `text/lable/value`|
+|default-value|values of initially selected items in each column|Array|`[]`|Available key `text/label/value`|
 |invalid-index|indexes of disabled items in each column|Array|`[]`|array of multiple disabled items, such as `[[1,2], 2]`|
 |is-view|inline display in page, otherwise it shows as `Popup`|Boolean|`false`|-|
 |is-cascade|data in each column is cascaded or not|Boolean|`false`|see #Appendix for the format of cascaded data|
+|keep-index <sup class="version-after">2.5.2+</sup>|keep last stop position when the column data changes|Boolean|`false`|only for cascaded data|  
 |line-height|line height of options|Number|`45`|unit `px`|
 |title|title of picker|String|-|-|
 |describe|description of picker|String|-|-|
 |ok-text|confirmation text|String|`confirm`|-|
 |cancel-text|cancellation text|String|`cancel`|-|
+|large-radius <sup class="version-after">2.4.0+</sup>|large radius of title bar|Boolean|`false`|-|
+|mask-closable|picker will be closed when clicking mask|Boolean|`true`|-|
 
 #### Picker Methods
 
@@ -56,7 +59,7 @@ Returns
 
 |Props | Description | Type|
 |----|-----|------|
-|activeItemValue|value of selected item|Object: {value, lable, ...}|
+|activeItemValue|value of selected item|Object: {value, label, ...}|
 
 ##### getColumnValues(): columnsValue
 Get values of all selected columns, need to be called after the `initialed` event is invoked or asynchronously called
@@ -65,7 +68,7 @@ Returns
 
 |Props | Description | Type|
 |----|-----|------|
-|columnsValue|values of all selected columns|Array<{value, lable, ...}>|
+|columnsValue|values of all selected columns|Array<{value, label, ...}>|
 
 ##### getColumnIndex(index): activeItemIndex
 Get the index of the currently selected item in the column, need to be called after the `initialed` event is invoked or asynchronously called
@@ -95,7 +98,7 @@ Set column data
 |Parameters | Description | Type|
 |----|-----|------|
 |index|the index of each column|Number|
-|values|data of each column|Array<{value, lable, ...}>|
+|values|data of each column|Array<{value, label, ...}>|
 |callback|callback is completed after setting `values`|Function|
 
 #### Picker Events
@@ -110,14 +113,14 @@ Change pickers' selections
 |----|-----|------|
 |columnIndex|the index of changed column|Number|
 |itemIndex|the index of changed item in the column|Number|
-|value|the value of changed item in the column|Object: {value, lable, ...}|
+|value|the value of changed item in the column|Object: {value, label, ...}|
 
 ##### @confirm(columnsValue)
 Confirm picker's selection (only when `is-view` is `false`）
 
 |Parameters | Description | Type|
 |----|-----|------|
-|columnsValue|values of all selected columns|Array<{value, lable, ...}>|
+|columnsValue|values of all selected columns|Array<{value, label, ...}>|
 
 ##### @cancel()
 Cancel picker's selection (only when `is-view` is `false`）

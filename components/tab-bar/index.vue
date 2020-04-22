@@ -128,6 +128,7 @@ export default {
       })
     },
     items() {
+      /* istanbul ignore next */
       this.$nextTick(function() {
         this.reflow()
       })
@@ -138,6 +139,7 @@ export default {
       })
     },
     scrollable() {
+      /* istanbul ignore next */
       this.scrollerTmpKey = Date.now()
     },
   },
@@ -149,17 +151,18 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('resize', this.reflow)
-    this.reflow()
-
-    if (this.immediate) {
-      this.$nextTick(() => {
-        this.$emit('change', this.items[this.currentIndex], this.currentIndex)
-      })
-    }
+    this.$_resizeEnterBehavior()
+  },
+  activated() {
+    /* istanbul ignore next */
+    this.$_resizeEnterBehavior()
+  },
+  deactivated() {
+    /* istanbul ignore next */
+    this.$_resizeLeaveBehavior()
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.reflow)
+    this.$_resizeLeaveBehavior()
   },
 
   methods: {
@@ -185,8 +188,22 @@ export default {
       this.currentName = item.name
       this.$emit('input', item.name)
     },
+    $_resizeEnterBehavior() {
+      window.addEventListener('resize', this.reflow)
+      this.reflow()
+      /* istanbul ignore next */
+      if (this.immediate) {
+        this.$nextTick(() => {
+          this.$emit('change', this.items[this.currentIndex], this.currentIndex)
+        })
+      }
+    },
+    $_resizeLeaveBehavior() {
+      window.removeEventListener('resize', this.reflow)
+    },
     // MARK: public methods
     reflow() {
+      /* istanbul ignore next */
       if (!this.$refs.items || this.$refs.items.length === 0) {
         return
       }
@@ -195,11 +212,13 @@ export default {
 
       let contentWidth = 0
       for (let i = 0, len = this.items.length; i < len; i++) {
-        contentWidth += this.$refs.items[i].offsetWidth
+        const {width} = this.$refs.items[i].getBoundingClientRect()
+        contentWidth += width
       }
       this.contentW = contentWidth
       this.$refs.scroller.reflowScroller()
       this.$nextTick(() => {
+        /* istanbul ignore next */
         if (!this.$refs.items || !this.$refs.items[this.currentIndex]) {
           return
         }
@@ -215,7 +234,7 @@ export default {
           this.$refs.scroller.scrollTo(0, 0, true)
           return
         }
-
+        /* istanbul ignore next */
         if (!nextTarget) {
           this.$refs.scroller.scrollTo(this.contentW, 0, true)
           return
@@ -255,6 +274,7 @@ export default {
   min-width 100%
 
 .md-tab-bar-item
+  flex auto
   flex-shrink 0
   position relative
   display inline-flex

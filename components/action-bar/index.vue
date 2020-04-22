@@ -8,8 +8,13 @@
         <template v-for="(item, index) in coerceActions">
           <md-button
             class="md-action-bar-button"
-            :type="!!item.disabled ? 'disabled' : 'primary'"
-            :plain="index !== coerceActions.length - 1"
+            :type="item.type || (!!item.disabled ? 'disabled' : 'primary')"
+            :plain="item.plain || (index !== coerceActions.length - 1)"
+            :round="item.round"
+            :inactive="item.inactive"
+            :loading="item.loading"
+            :icon="item.icon"
+            :icon-svg="item.iconSvg"
             :key="index"
             @click="$_onBtnClick($event, item)"
           >
@@ -73,6 +78,7 @@ export default {
   display flex
   flex 1
   padding-bottom constant(safe-area-inset-bottom)
+  padding-bottom env(safe-area-inset-bottom)
   
 .md-action-bar-text
   display flex

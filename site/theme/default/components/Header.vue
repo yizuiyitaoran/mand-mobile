@@ -103,7 +103,7 @@ export default {
       versionTableShow: false,
       versionData: [{
         text: 'v1.x',
-        path: 'https://mand-mobile.github.io'
+        path: 'https://mand-mobile.github.io/1x-doc/'
       }],
       langSwitchPath: ''
     }
@@ -396,7 +396,7 @@ export default {
       display block !important
       margin 0 !important
       li.nav-item
-        &.palette
+        &.palette, &.mand-mobile-rn
           display none
         a
           padding 0 10px !important

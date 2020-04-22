@@ -29,14 +29,35 @@ this.$dialog.alert({ content: '' }) // Totally Import
 | icon-svg | svg icon | Boolean |`false`|Refer to `Icon` component for customized icon|
 | closable | whether the close button is visible or not | Boolean | `true` | - |
 | layout | layout of action buttons, `row, column` | String | `row` | - |
-| btns | action buttons in the footer| Array {text, handler, warning} | `[]` | - |
+| btns | action buttons in the footer| Array\<DialogBtnOptions\> | `[]` | - |
 | append-to | portal node of dialog | HTMLElement | `document.body` | - |
 | has-mask | has mask or not | Boolean | `true` | - |
 | mask-closable | if the dialog will be closed when clicking mask| Boolean | `false` | - |
 | transition | the animation effect of dialog | String | refer to [Transition](https://didi.github.io/mand-mobile/#/en-US/docs/components/feedback/transition?anchor=API) for optional values |
 
+#### DialogBtnOptions Props
+
+| Props | Description | Type | Default |
+|----|-----|------|------|
+|text|button text|String|-|
+|handler|click callback|Function(btn: DialogBtnOptions)|-|
+|warning|warning button|Boolean|`false`|
+|disabled <sup class="version-after">2.4.0+</sup>|disabled button|Boolean|`false`|
+|loading <sup class="version-after">2.4.0+</sup>|loading button|Boolean|`false`|
+|icon|name of icon|String|-|
+|iconSvg|svg icon|Boolean|`false`|
+
 #### Dialog Slots
+
+##### default
+
 Default slots is used as the content of dialog
+
+##### header
+
+Header slot, generally used for placing pictures, etc <sup class="version-after">2.4.0+</sup>
+
+---
 
 #### Dialog Instance Methods
 
@@ -68,6 +89,8 @@ Dynamically create a confirmation dialog
 | confirmWarning | clicking the Confirm button is a warning action | Boolean | `false` |
 | onConfirm | callback function is invoked when clicking confirmation button | Function | -|
 | onCancel | callback function is invoked when clicking cancellation button | Function | -|
+| onShow <sup class="version-after">2.5.0+</sup>| callback function is invoked when dialog is shown | Function | -|
+| onHide <sup class="version-after">2.5.0+</sup>| callback function is invoked when dialog is hidden | Function | -|
 
 ##### Dialog.alert(props)
 Dynamically create an alert dialog
@@ -80,6 +103,8 @@ Dynamically create an alert dialog
 | confirmText | confirmation button | String | `Confirm` |
 | warning | clicking the Confirm button is a warning action | Boolean | `false` |
 | onConfirm | callback function is invoked when clicking confirmation button | Function | -|
+| onShow | callback function is invoked when dialog is shown | Function | -|
+| onHide | callback function is invoked when dialog is hidden | Function | -|
 
 ##### Dialog.succeed(props)
 Dynamically create a success dialog
@@ -91,6 +116,8 @@ Dynamically create a success dialog
 | confirmText | confirmation button | String | `Confirm` |
 | onConfirm | callback function is invoked when clicking confirmation button| Function | -|
 | onCancel | callback function is invoked when clicking cancellation button | Function | -|
+| onShow | callback function is invoked when dialog is shown | Function | -|
+| onHide | callback function is invoked when dialog is hidden | Function | -|
 
 ##### Dialog.failed(props)
 Dynamically create a fail dialog
@@ -102,6 +129,8 @@ Dynamically create a fail dialog
 | confirmText | confirmation button | String | `Confirm` |
 | onConfirm | callback function is invoked when clicking confirmation button| Function | -|
 | onCancel | callback function is invoked when clicking cancellation button | Function | -|
+| onShow | callback function is invoked when dialog is shown | Function | -|
+| onHide | callback function is invoked when dialog is hidden | Function | -|
 
 ##### Dialog.closeAll()
 Close all global dialogs

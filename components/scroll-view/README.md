@@ -15,9 +15,11 @@ Vue.component(ScrollView.name, ScrollView)
 
 ### 使用指南
 
-`ScrollViewRefresh`为组件库内置的下拉刷新组件，仅用于作为视觉展示，需在插槽<a href="javascript:jumpAnchor('refresh')">refresh</a>中使用，下拉刷新组件也可自定义
+* `ScrollViewRefresh`为组件库内置的下拉刷新组件，仅用于作为视觉展示，需在插槽<a href="javascript:jumpAnchor('refresh')">refresh</a>中使用，下拉刷新组件也可自定义
 
-`ScrollViewMore`为组件库内置的加载更多组件，仅用于作为视觉展示，需在插槽<a href="javascript:jumpAnchor('more')">more</a>中使用，加载更多组件也可自定义
+* `ScrollViewMore`为组件库内置的加载更多组件，仅用于作为视觉展示，需在插槽<a href="javascript:jumpAnchor('more')">more</a>中使用，加载更多组件也可自定义
+
+* **组件容器需具有高度，否则会出现无法滚动或回弹问题。**更多使用的常见问题请查看<a href="javascript:jumpAnchor('附录')">附录</a>
 
 ### 代码演示
 <!-- DEMO -->
@@ -30,11 +32,16 @@ Vue.component(ScrollView.name, ScrollView)
 |scrolling-x | 水平滚动 | Boolean | `true` | - |
 |scrolling-y | 垂直滚动 | Boolean | `true` | - |
 |bouncing | 可回弹 | Boolean | `true` | -|
-|auto-reflow | 内容发生变化时自动重置滚动区域尺寸 | Boolean | `false` | 当设置为`false`时，内容发生变化需手动调用`reflowScroller` |
+|auto-reflow | 内容发生变化时自动重置滚动区域尺寸 | Boolean | `false` | 当设置为`false`时，内容发生变化需手动调用`reflowScroller`。建议当滚动区域被隐藏时将其关闭，否则会无法保存上次滚动位置。 |
 |manual-init | 手动初始化 | Boolean | `false` | 一般用于异步初始化的场景，需手动调用`init`方法完成初始化 |
 |end-reached-threshold | 触发到达底部的提前量 | Number | 0 | 单位`px` |
 |immediate-check-end-reaching <sup class="version-after">2.1.0+</sup>| 初始化时立即触发是否到达底部检查 | Boolean | `false` | - |
 |touch-angle <sup class="version-after">2.1.0+</sup>| 触发滚动的角度范围 | Number | 45 | 单位`deg` |
+|is-prevent <sup class="version-after">2.3.0+</sup>| 阻止浏览器默认滚动 | Boolean | `true` | 如果设置为`false`，当在非可滚动角度范围触发滚动时会触发浏览器默认滚动 |
+
+#### ScrollView TouchAngle
+
+<img src="https://pt-starimg.didistatic.com/static/starimg/img/cSL4mjxTmW1560240984431.jpg" width="460"/>
 
 #### ScrollViewRefresh Props
 |属性 | 说明 | 类型 | 默认值 | 备注|
@@ -97,6 +104,9 @@ Vue.component(ScrollView.name, ScrollView)
 |top|距顶部距离|Number|
 |animate|使用动画|Boolean|
 
+##### getOffsets(): {left: number, top: number}
+获取滚动位置 <sup class="version-after">2.5.4+</sup>
+
 ##### triggerRefresh()
 触发下拉刷新
 
@@ -122,5 +132,28 @@ Vue.component(ScrollView.name, ScrollView)
 ##### @refreshing()
 刷新中事件
 
-##### @endReached()
+##### @end-reached()
 滚动触底事件
+
+### 附录
+
+#### 无法正常滚动且异常回弹
+
+首先，大多数滚动异常的情况是由于容器尺寸（垂直滚动：高度，水平滚动：宽度）的问题导致，容器的高度可以通过**固定尺寸**，**流式布局**，**flex布局**等多种方式控制，当容器尺寸不足时会导致内部[Scroller初始化](https://github.com/didi/mand-mobile/blob/master/components/scroll-view/index.vue#L374)异常。当出现此类情况时，可通过浏览器元素查看器检查容器元素的**`.md-scroll-view`**高度是否正确。
+
+其次，确认是否存在动态变更滚动区域内容，导致滚动区域尺寸变化，此时需调用`reflowScroller`或者直接将`auto-reflow`设置为`true`。
+
+#### 下拉刷新后滚动无法触发endReached
+
+在组件内部`下拉刷新`和`上拉加载`应该视为两个无关联的动作，因为动作内容有用户决定(业务逻辑)，故无法确定下拉刷新一定是"刷新列表回第一页的状态"，所以无法直接在下拉刷新的时候控制`isEndReaching`。该问题可以抽象为`下拉刷新`时需将`上拉加载`的状态重置，可以在`refreshing`事件去手动重置：
+
+```javascript
+$_onRefresh() {
+  // 重置列表数据
+  this.list = 10
+  this.$refs.scrollView.finishRefresh()
+  // 重置“上拉加载”的状态
+  this.isFinished = false
+  this.$refs.scrollView.finishLoadMore()
+}
+```

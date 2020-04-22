@@ -6,6 +6,7 @@
   <a href="https://codecov.io/gh/didi/mand-mobile"><img src="https://img.shields.io/codecov/c/github/didi/mand-mobile/master.svg?style=flat-square" alt="codecov"></a>
   <a href="https://www.npmjs.org/package/mand-mobile"><img src="https://img.shields.io/npm/v/mand-mobile.svg?style=flat-square" alt="npm package"></a>
   <a href="https://www.npmjs.org/package/mand-mobile"><img src="http://img.shields.io/npm/dm/mand-mobile.svg?style=flat-square" alt="npm downloads"></a>
+  <a href="https://www.jsdelivr.com/package/npm/mand-mobile"><img src="https://data.jsdelivr.com/v1/package/npm/mand-mobile/badge" alt="jsdelivr"></a>
   <a href="https://www.npmjs.org/package/mand-mobile"><img src="https://img.shields.io/npm/l/mand-mobile.svg?style=flat-square" alt="License"></a>
   <br/>
   <a href="https://unpkg.com/mand-mobile/"><img src="http://img.badgesize.io/https://unpkg.com/mand-mobile/lib/mand-mobile.umd.js?compression=gzip&label=gzip%20size:%20JS&style=flat-square" alt="gzip js size"></a>
@@ -86,7 +87,7 @@ Vue.use(mandMobile)
 
 ### Usage
 
-Select the components you need to build your webapp. Find more details in [Component Preview](https://didi.github.io/mand-mobile/#/docs/preview) and [Quick Start](https://didi.github.io/mand-mobile/#/docs/started).
+Select the components you need to build your webapp. Find more details in [Quick Start](https://didi.github.io/mand-mobile/#/en-US/docs/started).
 
 ## Development
 
@@ -96,7 +97,7 @@ cd mand-mobile
 npm install
 npm run dev
 ```
-Open your browser and visit http://127.0.0.1:4000. Find more details in [Development Guide](https://didi.github.io/mand-mobile/#/docs/development).
+Open your browser and visit http://127.0.0.1:4000. Find more details in [Development Guide](https://didi.github.io/mand-mobile/#/en-US/docs/development).
 
 ## Contributing [![PR](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/didi/mand-mobile/pulls)
 Welcome to contribute by creating issues or sending pull requests. See [Contributing Guide](CONTRIBUTING.md) for guidelines.
@@ -107,3 +108,10 @@ Welcome to contribute by creating issues or sending pull requests. See [Contribu
 
 ## License
 Mand Mobile is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file.
+
+## Useful Links
+
+
+* [Chameleon](https://github.com/didi/chameleon) /kəˈmiːlɪən/: Unify all platforms(Web/Weex/Mini program) with MVVM. Focus on Write Once Run AnyWhere.
+
+* [DoraemonKit](https://github.com/didi/DoraemonKit) /'dɔ:ra:'emɔn/: A full-featured App (iOS & Android) development assistant. You deserve it.

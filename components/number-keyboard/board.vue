@@ -195,6 +195,8 @@ export default {
           width 66.6%
         &:active, &.active
           background-color number-keyboard-key-bg-tap
+        &:before, &:after
+          pointer-events none
   .keyboard-operate
     flex 1
     .keyboard-operate-list
@@ -220,17 +222,12 @@ export default {
         &.confirm
           padding-top 5px
           color number-keyboard-key-confirm-color
-          font-size number-keyboard-key-font-size
+          font-size font-caption-large
           background number-keyboard-key-confirm-bg
           display flex
           flex 1
           align-items center
           justify-content center
-          font-size font-caption-large
           &:active
             background-color number-keyboard-key-confirm-bg-tap
-
-  &.simple
-    .keyboard-number-item
-      color number-keyboard-key-color-simple !important
 </style>

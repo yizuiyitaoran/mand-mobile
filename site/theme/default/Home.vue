@@ -118,7 +118,7 @@
                     :data-index="3 + homeBlockButtonIndex"
                     v-html="homeBlockButton.htmls"
                   ></div>
-                  </template>
+                </template>
                 <template>
                   <div
                     class="home-button-other"
@@ -129,6 +129,20 @@
                   </div>
                 </template>
               </template>
+            </template>
+          </div>
+          <!-- 模块其他 -->
+          <div
+            class="home-others"
+            v-if="homeBlock.others"
+            v-show="blockShow[homeBlockIndex]"
+            :key="`home-others-${homeBlockIndex}-3`"
+          >
+            <template v-if="typeof homeBlock.others === 'string'">
+              <div v-html="homeBlock.others"></div>
+            </template>
+            <template v-else>
+              <component :is="homeBlock.others" :ref="`block-other-slots-${homeBlockIndex}`"></component>  
             </template>
           </div>
         </transition-group>
@@ -162,7 +176,7 @@ export default {
       })
     } else {
       this.scrollBlockView()
-      $(window).bind('scroll', this.scrollBlockView)
+      this.container.bind('scroll', this.scrollBlockView)
     }
   },
 
@@ -173,6 +187,9 @@ export default {
     homeData() {
       return homeConfig[this.lang]
     },
+    container() {
+      return $('#default-container')
+    }
   },
 
   methods: {
@@ -199,8 +216,8 @@ export default {
       }, delay)
     },
     scrollBlockView () {
-      const scrollTop = $(document).scrollTop()
-      const bottomOffset = scrollTop + $(window).height()
+      const scrollTop = this.container.scrollTop()
+      const bottomOffset = scrollTop + this.container.height()
       $('.home-box-block').each((index, item) => {
         const hh = $(item).height()
         // const topPos = index < 1 ? 0 : (index - 1) * hh  + hh/2 + 100
@@ -332,6 +349,13 @@ export default {
           a
             color #2F86F6
             text-decoration none
+      .home-others
+        a
+          float left
+          color #2F86F6
+          text-decoration none
+          &:hover
+            opacity 0.8
       &.home-box-block-0
         // height 700px
         .home-text
@@ -475,6 +499,11 @@ export default {
             box-shadow none !important
             &:last-of-type
               margin 0 !important
+      .home-others
+        float left
+        position relative
+        left 50%
+        transform translateX(-50%)
   .home-button-other, .mfe-git-star-number
     display none !important
 </style>

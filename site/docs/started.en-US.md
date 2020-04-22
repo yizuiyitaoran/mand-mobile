@@ -6,13 +6,13 @@ title: Quickstart
 
 **New project** can be initialized and integrated with `mand-mobile` by [vue-cli](https://github.com/vuejs/vue-cli). Please refer to <a href="javascript:jumpAnchor('Installation')">Installation</a> for **existing projects**.
 
-* Vue CLI 2/3([Template](https://github.com/mand-mobile/mand-mobile-template))(sp 1.x)
+* **Vue CLI 2/3**([Template](https://github.com/mand-mobile/mand-mobile-template))(sp 1.x)
 
 ```shell
 vue init mand-mobile/mand-mobile-template my-mand-mobile-project
 ```
 
-* Vue CLI 3([Plugin](https://github.com/mand-mobile/vue-cli-plugin-mand))(sp 1.x/2.x)
+* **Vue CLI 3**([Plugin](https://github.com/mand-mobile/vue-cli-plugin-mand))(sp 1.x/2.x)
 
 ```shell
 vue create my-project
@@ -21,9 +21,23 @@ npm install --save-dev vue-cli-plugin-mand
 vue invoke mand
 ```
 
-* Vue CLI 3([Example](https://github.com/mand-mobile/vue-cli3-example))(sp 1.x/2.x)
+* **Vue CLI 3**([Example](https://github.com/mand-mobile/vue-cli3-example))(sp 1.x/2.x)
 
-* Nuxt([Example](https://github.com/mand-mobile/nuxt-example))
+* **Nuxt**([Example](https://github.com/mand-mobile/nuxt-example))
+
+#### Vue UI
+
+Create and manage projects with a graphical interface via [Vue UI](https://cli.vuejs.org/guide/creating-a-project.html#using-the-gui) and integrate `mand-mobile` with the plugin [vue-cli-plugin-mand](https://www.npmjs.com/package/vue-cli-plugin-mand)
+
+* Start `Vue UI`
+
+```shell
+vue ui
+```
+
+* Once the project is created, click on the **Plugins** and search for `mand-mobile`, click on the search result to complete the installation
+
+<img src="https://pt-starimg.didistatic.com/static/starimg/img/3zEzXVU28N1565160574175.png"/>
 
 #### Installation
 
@@ -42,6 +56,8 @@ Add `script` and `link` tags in your browser and use the global variable `window
 The `JS` and `CSS` bundles are provided in the `mand-mobile/lib` or `mand-mobile/lib-vw` directory of the `npm` distribution. See <a href="javascript:jumpAnchor('Release Package Directory')">Release Package Directory</a>.    
 
 You can also download it via [![](https://data.jsdelivr.com/v1/package/npm/mand-mobile/badge)](https://www.jsdelivr.com/package/npm/mand-mobile) or [UNPKG](https://unpkg.com/mand-mobile/lib/).
+
+> It is recommended that users who are directly introduced with the CDN lock the version to avoid incompatibility updates. Please refer to [unpkg.com](unpkg.com) for more information.
 
 #### Import
 
@@ -111,14 +127,6 @@ Vue.use(mandMobile)
 
 #### Prepare Before Use
 
-##### Normalize
-
-To make browsers render all elements more consistently and in line with modern standards，[Normalize.css](http://necolas.github.io/normalize.css/) is recommended to import.
-
-##### FastClick
-
-To avoid click problems caused by [browser compatibility](https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile), [FastClick](https://github.com/ftlabs/fastclick) is recommended to import.
-
 ##### Release Package Directory
 
 [Release Package](https://unpkg.com/mand-mobile/) includes the following different directories, which are applicable in different scenarios. You can select one directory to load according to actual needs：
@@ -184,114 +192,17 @@ webpackConfig.plugins.push(new webpack.LoaderOptionsPlugin({
 }))
 ```
 
+> [How to make the configuration only work on `mand-mobile`?](https://github.com/didi/mand-mobile/issues/103)
+
+
+#### Customization
+
+* [Customize Theme](#/en-US/docs/theme)
+* [Local Iconfont](#/en-US/docs/components/basic/icon?anchor=Importing%20local%20font%20files)
+
 #### Usage
 
-This is a form page developed by `Mand Mobile`. More components can be found in <a href="#/docs/preview">Component Preview</a>.
+This is a form page developed by `Mand Mobile`
 
-```vue
-<template>
-  <div id="app">
-    <md-field class="block" title="投保人">
-      <md-input-item
-        title="投保人姓名"
-        placeholder="请填写投保人姓名"
-      ></md-input-item>
-      <md-input-item
-        title="身份证号"
-        placeholder="请填写投保人身份证号"
-      ></md-input-item>
-    </md-field>
-    <md-field class="block" title="被保人">
-      <md-input-item
-        title="被保人姓名"
-        placeholder="请填写被保人姓名"
-      ></md-input-item>
-      <md-field-item
-        title="与投保人关系"
-        :content="relation"
-        arrow
-        @click="isPickerShow = true"
-        solid
-      ></md-field-item>
-      <md-picker
-        v-model="isPickerShow"
-        :data="pickerData"
-        title="选择与投保人关系"
-      ></md-picker>
-      <md-input-item
-        title="身份证号"
-        placeholder="请填写被保人身份证号"
-      ></md-input-item>
-      <md-input-item
-        title="手机号"
-        type="phone"
-        placeholder="请填写被保人手机号"
-      ></md-input-item>
-    </md-field>
-    <md-agree class="agree">
-      本人承诺投保人已充分了解本保险产品，并保证投保信息的真实性，理解并同意
-    </md-agree>
-    <md-action-bar :actions="actionBarData">
-      &yen;128.00
-    </md-action-bar>
-  </div>
-</template>
-
-<script>
-import {
-  Agree,
-  ActionBar,
-  Field,
-  FieldItem,
-  InputItem,
-  Picker
-} from 'mand-mobile'
-
-export default {
-  name: 'app',
-
-  components: {
-    [Agree.name]: Agree,
-    [ActionBar.name]: ActionBar,
-    [Field.name]: Field,
-    [FieldItem.name]: FieldItem,
-    [InputItem.name]: InputItem,
-    [Picker.name]: Picker
-  },
-
-  data () {
-    return {
-      relation: '本人',
-      isPickerShow: false,
-      actionBarData: [{
-        text: '我要投保'
-      }],
-      pickerData: [[{text:'本人'},{text:'父母'},{text:'配偶'},{text:'子女'}]]
-    }
-  }
-}
-</script>
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-}
-body{
-  background: #f0f0f0;
-}
-.detail{
-  background: #fff;
-  font-size: .24rem;
-}
-.block{
-  margin-top: .32rem;
-}
-.agree{
-  padding: .32rem;
-  font-size: .24rem;
-  color: #666;
-}
-</style>
-```
+<iframe src="https://codesandbox.io/embed/vue-template-ckqbz?fontsize=14&hidenavigation=1&module=%2Fsrc%2FApp.vue" title="Mand Mobile Quick Start" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media" style="width:100%; height:1000px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 

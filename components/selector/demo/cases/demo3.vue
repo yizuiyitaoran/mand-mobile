@@ -15,6 +15,7 @@
       min-height="320px"
       okText="确认"
       cancelText="取消"
+      large-radius
       @confirm="onSelectorConfirm"
       is-check
     ></md-selector>
@@ -28,7 +29,7 @@ export default {
   /* DELETE */
   title: 'Check模式',
   titleEnUS: 'Check mode',
-  height: 500,
+  height: 550,
   /* DELETE */
   components: {
     [Selector.name]: Selector,

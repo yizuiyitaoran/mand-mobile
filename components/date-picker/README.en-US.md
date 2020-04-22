@@ -30,13 +30,15 @@ Vue.component(DatePicker.name, DatePicker)
 |unit-text|element unit for text displaying|Array|`['y', 'M', 'd', 'h', 'm']`|`text-render` for complex logic|
 |text-render|customized option for text displaying|Function(typeFormat, column0Value, column1Value, ...): String|-|`unit-text` is invalid when using `text-render`, refer to `Appendix`|              
 |today-text|displaying text of today|String|`today`|use `&` to take placeholder date, like `&(today)`| 
-|line-height|line height of options|Number|`45`|unit `px`|          
+|line-height|line height of options|Number|`45`|unit `px`| 
+|keep-index <sup class="version-after">2.5.2+</sup>|keep last stop position when the column data changes|Boolean|`false`|-|          
 |is-view|inline-display in page, otherwise it shows as `Popup`|Boolean|`false`|-| 
 |title|title of date-picker|String|-|-|
 |describe|description of date-picker|String|-|-|
 |ok-text|confirmation text|String|`confirm`|-| 
 |cancel-text|cancellation text|String|`cancel`|-| 
-|mask-closable|if popup can be closed through clicking mask|String|`true`|-|
+|large-radius <sup class="version-after">2.4.0+</sup>|large radius of title bar|Boolean|`false`|-|
+|mask-closable|picker will be closed when clicking mask|String|`true`|-|
 
 #### DatePicker Methods
 
